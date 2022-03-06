@@ -1,5 +1,7 @@
 package com.papa.baguwen1.baguwen1.redis;
 
+import com.papa.baguwen1.baguwen1.redis.bean.Notice;
+
 import java.util.Map;
 
 public interface IRedisService {
@@ -13,4 +15,6 @@ public interface IRedisService {
     Object getMapValue(String key);
     // 获取元素
     Object getValue(String key);
+    //发送消息
+    void convertAndSend(String topicName, Notice notice);
 }

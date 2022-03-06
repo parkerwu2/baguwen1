@@ -1,5 +1,6 @@
 package com.papa.baguwen1.baguwen1.redis;
 
+import com.papa.baguwen1.baguwen1.redis.bean.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -28,6 +29,11 @@ public class RedisServiceImpl implements IRedisService {
     public Object getValue(String key) {
         ValueOperations<String, String> vo = redisTemplate.opsForValue();
         return vo.get(key);
+    }
+
+    @Override
+    public void convertAndSend(String topicName, Notice notice) {
+        redisTemplate.convertAndSend(topicName, notice);
     }
 
     @Override

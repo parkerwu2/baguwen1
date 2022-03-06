@@ -1,6 +1,7 @@
 package com.papa.baguwen1.baguwen1;
 
 import com.papa.baguwen1.baguwen1.redis.IRedisService;
+import com.papa.baguwen1.baguwen1.redis.bean.Notice;
 import com.papa.baguwen1.baguwen1.util.SerializeUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,12 @@ class Baguwen1ApplicationTests {
         System.out.println("v1=" + v1);
         Fruit f2 = (Fruit)redisService.getValue("fruit2");
         System.out.println("f=" + f2.getName() + "," + f2.getType() + ", " + f2.getId());
+    }
+
+    @Test
+    public void sendNotice(){
+        Notice notice = new Notice("papa", "fight");
+        redisService.convertAndSend("topicName", notice);
+        System.out.println("发送消息" + notice);
     }
 }
