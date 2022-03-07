@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 @SpringBootTest
 class Baguwen1ApplicationTests {
     @Autowired
@@ -35,5 +39,17 @@ class Baguwen1ApplicationTests {
         Notice notice = new Notice("papa", "fight");
         redisService.convertAndSend("topicName", notice);
         System.out.println("发送消息" + notice);
+    }
+
+    @Test
+    public void testRedission() throws InterruptedException {
+        ExecutorService es = Executors.newFixedThreadPool(100);
+        Stock stock = new Stock(50);
+        for (int i = 0; i < 75; i++){
+            StockThread thread = new StockThread("线程" + i, stock);
+            es.submit(thread);
+        }
+        es.shutdownNow();
+        es.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
     }
 }
