@@ -30,7 +30,7 @@ public class Message {
     private String body;
 
     /**
-     * 延时时间 被消费时间  取当前时间戳+延迟时间
+     * 延时时间 被消费时间   取当前时间戳+延迟时间
      */
     private Long delayTime;
 
