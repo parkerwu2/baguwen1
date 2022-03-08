@@ -60,6 +60,6 @@ class Baguwen1ApplicationTests {
     @Test
     void sendMessage() {
         messageProvider.sendMessage("同时发送消息1", 20);
-        messageProvider.sendMessage("同时发送消息2", 20);
+        messageProvider.sendMessage("同时发送消息2", 10);
     }
 }
