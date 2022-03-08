@@ -1,6 +1,7 @@
 package com.papa.baguwen1.baguwen1;
 
 import com.papa.baguwen1.baguwen1.redis.IRedisService;
+import com.papa.baguwen1.baguwen1.redis.MessageProvider;
 import com.papa.baguwen1.baguwen1.redis.bean.Notice;
 import com.papa.baguwen1.baguwen1.util.SerializeUtil;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 class Baguwen1ApplicationTests {
     @Autowired
     private IRedisService redisService;
+    @Autowired
+    private MessageProvider messageProvider;
+
     @Test
     void contextLoads() {
     }
@@ -51,5 +55,11 @@ class Baguwen1ApplicationTests {
         }
         es.shutdownNow();
         es.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+    }
+
+    @Test
+    void sendMessage() {
+        messageProvider.sendMessage("同时发送消息1", 20);
+        messageProvider.sendMessage("同时发送消息2", 20);
     }
 }
