@@ -5,15 +5,18 @@ import com.papa.baguwen1.baguwen1.importor.TestA;
 import com.papa.baguwen1.baguwen1.importor.TestB;
 import com.papa.baguwen1.baguwen1.importor.TestC;
 import com.papa.baguwen1.baguwen1.importor.TestD;
+import com.papa.baguwen1.baguwen1.service.HelloServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.SpringVersion;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(classes = Baguwen1Application.class)
 public class JavaBootTest {
     @Autowired
     private TestA testA;
@@ -25,6 +28,14 @@ public class JavaBootTest {
     private TestD testD;
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    private HelloServiceImpl helloService;
+
+    @Test
+    public void value(){
+        String s = helloService.sayHello();
+        System.out.println("word is " + s);
+    }
 
     @Test
     public void test(){
@@ -63,5 +74,13 @@ public class JavaBootTest {
             jdbcTemplate.update("insert into t_file (id,name,type,content,backedUp) values (?,?,?,?,?)",
                     new Object[]{file.getId(),file.getName(),file.getType(),file.getContent(),file.getBackedUp()});
         }
+    }
+
+    @Test
+    public void getSpringVersion() {
+        String version = SpringVersion.getVersion();
+        String version1 = SpringBootVersion.getVersion();
+        System.out.println(version);
+        System.out.println(version1);
     }
 }
