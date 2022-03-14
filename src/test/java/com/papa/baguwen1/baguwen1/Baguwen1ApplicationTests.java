@@ -6,18 +6,23 @@ import com.papa.baguwen1.baguwen1.redis.bean.Notice;
 import com.papa.baguwen1.baguwen1.util.SerializeUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-@SpringBootTest
+@SpringBootTest(classes = Baguwen1Application.class)
 class Baguwen1ApplicationTests {
     @Autowired
     private IRedisService redisService;
     @Autowired
     private MessageProvider messageProvider;
+    @Value("${system.user.password.secret}")
+    private String secret;
 
     @Test
     void contextLoads() {
@@ -61,5 +66,14 @@ class Baguwen1ApplicationTests {
     void sendMessage() {
         messageProvider.sendMessage("同时发送消息1", 20);
         messageProvider.sendMessage("同时发送消息2", 20);
+    }
+
+    @Test
+    public void enc(){
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        System.out.println("pass=" + passwordEncoder.encode("abc"));
+        PasswordEncoder passwordEncoder = new Pbkdf2PasswordEncoder(this.secret);
+        //94c6b58b1aa94bfe04a347925c10bd24c2e2e2d9cf0ce7b96b88425e1311ea9d896f76b0edbf5264
+        System.out.println("pass=" + passwordEncoder.encode("abc"));
     }
 }

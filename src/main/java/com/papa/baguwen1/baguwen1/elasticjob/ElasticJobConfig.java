@@ -12,12 +12,10 @@ import com.dangdang.ddframe.job.lite.spring.api.SpringJobScheduler;
 import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 public class ElasticJobConfig {
 
     @Autowired
@@ -83,7 +81,7 @@ public class ElasticJobConfig {
                 .build();
         return liteJobConfiguration;
     }
-    @Bean(initMethod = "init")
+//    @Bean(initMethod = "init")
     public SpringJobScheduler initSimpleElasticJob() {
         // 增加任务事件追踪配置
         JobEventConfiguration jobEventConfig = new JobEventRdbConfiguration(dataSource);
