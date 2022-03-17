@@ -5,6 +5,7 @@ import com.papa.baguwen1.baguwen1.importor.TestA;
 import com.papa.baguwen1.baguwen1.importor.TestB;
 import com.papa.baguwen1.baguwen1.importor.TestC;
 import com.papa.baguwen1.baguwen1.importor.TestD;
+import com.papa.baguwen1.baguwen1.limit.SimpleRateLimiter;
 import com.papa.baguwen1.baguwen1.service.HelloServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,15 @@ public class JavaBootTest {
     JdbcTemplate jdbcTemplate;
     @Autowired
     private HelloServiceImpl helloService;
+    @Autowired
+    private SimpleRateLimiter simpleRateLimiter;
+
+    @Test
+    public void testLimit(){
+        for (int i = 0; i <= 20; i++){
+            System.out.println(simpleRateLimiter.isActionAllowed("testUserId", "reply", 60, 8));
+        }
+    }
 
     @Test
     public void value(){
