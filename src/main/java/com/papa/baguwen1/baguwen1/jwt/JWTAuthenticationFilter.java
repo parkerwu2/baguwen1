@@ -1,6 +1,9 @@
 package com.papa.baguwen1.baguwen1.jwt;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -87,6 +90,13 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         } catch (Exception e){
             System.out.println("token解析失败" + token);
             return null;
+        }
+        // 验证 token
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256("123")).build();
+        try {
+            jwtVerifier.verify(token);
+        } catch (JWTVerificationException e) {
+            throw new RuntimeException("401");
         }
         System.out.println("获取token中的username="+ username);
         if (username != null) {

@@ -95,7 +95,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 //                .compact();
 
         String token = JWT.create().withAudience(authResult.getName())
-                .sign(Algorithm.HMAC256(String.valueOf(authResult.getCredentials())));
+                .sign(Algorithm.HMAC256("123"));
         System.out.println("登录以后设置token=" + token);
         response.addHeader("token", "Bearer " + token);
 
