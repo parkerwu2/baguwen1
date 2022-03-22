@@ -49,10 +49,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(token);
-        if (authenticationToken == null){
-            chain.doFilter(request, response);
-            return;
-        }
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         //放行
@@ -85,13 +81,23 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 //            throw new UsernameIsExitedException("该账号已过期,请重新登陆");
 //        }
         token = token.replace("Bearer ", "");
-        String username = JWT.decode(token).getAudience().get(0);
+        String username = null;
+        try {
+            username = JWT.decode(token).getAudience().get(0);
+        } catch (Exception e){
+            System.out.println("token解析失败" + token);
+            return null;
+        }
         System.out.println("获取token中的username="+ username);
-        ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
-        authorities.add(grantedAuthority);
         if (username != null) {
-            return new UsernamePasswordAuthenticationToken(username, "123", authorities);
+            if (username.equals("admin")) {
+                ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+                authorities.add(grantedAuthority);
+                return new UsernamePasswordAuthenticationToken(username, "123", authorities);
+            } else {
+                return new UsernamePasswordAuthenticationToken("user", null, new ArrayList<>());
+            }
         }
         return null;
     }

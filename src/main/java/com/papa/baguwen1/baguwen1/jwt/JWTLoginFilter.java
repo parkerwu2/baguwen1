@@ -66,10 +66,10 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         //authenticate()接受一个token参数,返回一个完全经过身份验证的对象，包括证书.
         // 这里并没有对用户名密码进行验证,而是使用 AuthenticationProvider 提供的 authenticate 方法返回一个完全经过身份验证的对象，包括证书.
 //        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
-
+        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 //UsernamePasswordAuthenticationToken 是 Authentication 的实现类
         System.out.println("登录成功");
-        return authenticationToken;
+        return authenticate;
     }
 
 
