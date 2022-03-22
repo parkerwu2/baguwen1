@@ -1,5 +1,7 @@
 package com.papa.baguwen1.baguwen1.security;
 
+import com.papa.baguwen1.baguwen1.jwt.JWTAuthenticationFilter;
+import com.papa.baguwen1.baguwen1.jwt.JWTLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,6 +32,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated() // 用户访问其它URL都必须认证后访问（登录后访问）
                 .and().formLogin().loginProcessingUrl("/login").permitAll() // 开启表单登录并配置登录接口
                 .and().csrf().disable(); // 关闭csrf
-
+        http.addFilter(new JWTLoginFilter(authenticationManager())) //整合jwt验证登录
+        .addFilter(new JWTAuthenticationFilter(authenticationManager())); //整合jwt验证token
     }
 }
