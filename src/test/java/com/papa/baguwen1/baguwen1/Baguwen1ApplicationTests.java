@@ -34,7 +34,7 @@ class Baguwen1ApplicationTests {
     @Test
     public void testLua(){
         luaScriptService.init();
-        luaScriptService.lua1();
+        luaScriptService.redisAddScriptExec();
     }
 
     @Test
