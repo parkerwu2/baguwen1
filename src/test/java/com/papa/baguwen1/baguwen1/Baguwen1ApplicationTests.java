@@ -1,6 +1,7 @@
 package com.papa.baguwen1.baguwen1;
 
 import com.papa.baguwen1.baguwen1.redis.IRedisService;
+import com.papa.baguwen1.baguwen1.redis.LuaScriptServiceImpl;
 import com.papa.baguwen1.baguwen1.redis.MessageProvider;
 import com.papa.baguwen1.baguwen1.redis.bean.Notice;
 import com.papa.baguwen1.baguwen1.util.SerializeUtil;
@@ -23,9 +24,17 @@ class Baguwen1ApplicationTests {
     private MessageProvider messageProvider;
     @Value("${system.user.password.secret}")
     private String secret;
+    @Autowired
+    private LuaScriptServiceImpl luaScriptService;
 
     @Test
     void contextLoads() {
+    }
+
+    @Test
+    public void testLua(){
+        luaScriptService.init();
+        luaScriptService.lua1();
     }
 
     @Test
