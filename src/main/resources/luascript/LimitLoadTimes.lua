@@ -38,4 +38,4 @@ result[1] = cjson.encode(jsonRedisTemp) --springboot redistemplate接收的是Li
 result[2] = ARGV[1] --将源参数内容一起返回
 redis.log(redis.LOG_DEBUG,cjson.encode(result)) --打印返回的数组结果，这里返回需要以字符返回
 
-return cjson.encode(jsonRedisTemp)
+return result
