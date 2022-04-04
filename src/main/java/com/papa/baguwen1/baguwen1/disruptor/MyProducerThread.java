@@ -1,6 +1,7 @@
 package com.papa.baguwen1.baguwen1.disruptor;
 
 import java.util.Calendar;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyProducerThread implements Runnable {
@@ -8,6 +9,7 @@ public class MyProducerThread implements Runnable {
     private DisruptorQueue disruptorQueue;
     private volatile boolean flag = true;
     private static AtomicInteger count = new AtomicInteger();
+    private static CyclicBarrier cyclicBarrier = new CyclicBarrier(3);
 
     public MyProducerThread(String name, DisruptorQueue disruptorQueue) {
         this.name = name;
@@ -18,6 +20,7 @@ public class MyProducerThread implements Runnable {
     public void run() {
         try {
             System.out.println(now() + this.name + "：线程启动。");
+            cyclicBarrier.await();
             while (flag) {
                 String data = count.incrementAndGet()+"";
                 // 将数据存入队列中
