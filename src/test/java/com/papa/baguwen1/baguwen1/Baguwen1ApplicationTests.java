@@ -1,5 +1,6 @@
 package com.papa.baguwen1.baguwen1;
 
+import com.papa.baguwen1.baguwen1.drools.PersonService;
 import com.papa.baguwen1.baguwen1.redis.IRedisService;
 import com.papa.baguwen1.baguwen1.redis.LuaScriptServiceImpl;
 import com.papa.baguwen1.baguwen1.redis.MessageProvider;
@@ -26,9 +27,19 @@ class Baguwen1ApplicationTests {
     private String secret;
     @Autowired
     private LuaScriptServiceImpl luaScriptService;
+    @Autowired
+    private PersonService personService;
 
     @Test
     void contextLoads() {
+    }
+
+    @Test
+    public void testDrools(){
+        personService.listPerson().forEach(a -> {
+            System.out.println(a.getName() + ", " + a.getAge());
+            System.out.println();
+        });
     }
 
     @Test
