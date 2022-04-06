@@ -1,6 +1,8 @@
 package com.papa.baguwen1.baguwen1;
 
+import com.papa.baguwen1.baguwen1.drools.drool.Person;
 import com.papa.baguwen1.baguwen1.drools.PersonService;
+import com.papa.baguwen1.baguwen1.drools.drool.PersonRuleController;
 import com.papa.baguwen1.baguwen1.redis.IRedisService;
 import com.papa.baguwen1.baguwen1.redis.LuaScriptServiceImpl;
 import com.papa.baguwen1.baguwen1.redis.MessageProvider;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +32,8 @@ class Baguwen1ApplicationTests {
     private LuaScriptServiceImpl luaScriptService;
     @Autowired
     private PersonService personService;
+    @Autowired
+    PersonRuleController controller;
 
     @Test
     void contextLoads() {
@@ -95,5 +100,24 @@ class Baguwen1ApplicationTests {
         PasswordEncoder passwordEncoder = new Pbkdf2PasswordEncoder(this.secret);
         //94c6b58b1aa94bfe04a347925c10bd24c2e2e2d9cf0ce7b96b88425e1311ea9d896f76b0edbf5264
         System.out.println("pass=" + passwordEncoder.encode("abc"));
+    }
+
+    @Test
+    public void testOnePerson() {
+        Person bob = new Person();
+        bob.setName("bob");
+
+        controller.fireAllRules4One(bob);
+    }
+
+    @Test
+    public void testTwoPerson() {
+        Person bob = new Person();
+        bob.setAge(33);
+
+        Person other = new Person();
+        other.setAge(88);
+
+        controller.fireAllRules4List(Arrays.asList(bob, other));
     }
 }
