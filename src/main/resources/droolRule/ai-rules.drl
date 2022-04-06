@@ -1,4 +1,4 @@
-package com.ai.prd
+package com.papa.baguwen1.baguwen1.drools.drool
 
 import com.papa.baguwen1.baguwen1.drools.drool.Person;
 import com.papa.baguwen1.baguwen1.drools.drool.PersonRuleAction;
