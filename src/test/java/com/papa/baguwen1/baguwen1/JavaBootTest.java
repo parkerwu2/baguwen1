@@ -7,16 +7,21 @@ import com.papa.baguwen1.baguwen1.importor.TestC;
 import com.papa.baguwen1.baguwen1.importor.TestD;
 import com.papa.baguwen1.baguwen1.limit.SimpleRateLimiter;
 import com.papa.baguwen1.baguwen1.service.HelloServiceImpl;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.SpringVersion;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @SpringBootTest(classes = Baguwen1Application.class)
 public class JavaBootTest {
     @Autowired

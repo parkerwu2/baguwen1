@@ -1,27 +1,34 @@
 package com.papa.baguwen1.baguwen1;
 
-import com.papa.baguwen1.baguwen1.drools.drool.Person;
+import com.papa.baguwen1.baguwen1.dao.mapper.Ba1Mapper;
+import com.papa.baguwen1.baguwen1.dao.pojo.Ba1Example;
 import com.papa.baguwen1.baguwen1.drools.PersonService;
+import com.papa.baguwen1.baguwen1.drools.drool.Person;
 import com.papa.baguwen1.baguwen1.drools.drool.PersonRuleController;
 import com.papa.baguwen1.baguwen1.redis.IRedisService;
 import com.papa.baguwen1.baguwen1.redis.LuaScriptServiceImpl;
 import com.papa.baguwen1.baguwen1.redis.MessageProvider;
 import com.papa.baguwen1.baguwen1.redis.bean.Notice;
 import com.papa.baguwen1.baguwen1.util.SerializeUtil;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @SpringBootTest(classes = Baguwen1Application.class)
-class Baguwen1ApplicationTests {
+public class Baguwen1ApplicationTests {
     @Autowired
     private IRedisService redisService;
     @Autowired
@@ -34,9 +41,17 @@ class Baguwen1ApplicationTests {
     private PersonService personService;
     @Autowired
     PersonRuleController controller;
+    @Autowired
+    private Ba1Mapper ba1Mapper;
 
     @Test
-    void contextLoads() {
+    public void testDb(){
+        long cnt = ba1Mapper.countByExample(new Ba1Example());
+        System.out.println("cnt= " + cnt);
+    }
+
+    @Test
+    public void contextLoads() {
     }
 
     @Test
@@ -88,7 +103,7 @@ class Baguwen1ApplicationTests {
     }
 
     @Test
-    void sendMessage() {
+    public void sendMessage() {
         messageProvider.sendMessage("同时发送消息1", 20);
         messageProvider.sendMessage("同时发送消息2", 20);
     }

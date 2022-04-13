@@ -1,7 +1,6 @@
 package com.papa.baguwen1.baguwen1.redis;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.papa.baguwen1.baguwen1.redis.bean.Message;
 import lombok.AllArgsConstructor;
@@ -76,7 +75,7 @@ public class DelayingQueueService {
             Message message = null;
             try {
                 message = mapper.readValue(msg, Message.class);
-            } catch (JsonProcessingException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return message;
