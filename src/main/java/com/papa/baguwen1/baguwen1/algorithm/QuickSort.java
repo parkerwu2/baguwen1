@@ -36,7 +36,6 @@ public class QuickSort {
      * @return
      */
     private static int division(int[] arr, int begin, int pivot) {
-        int temp;
         //左指针
         int left = begin;
         //右指针
