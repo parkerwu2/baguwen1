@@ -1,10 +1,9 @@
 package com.papa.baguwen1.baguwen1;
 
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.Vector;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Stream;
+
 class A extends Thread{
     private CountDownLatch cd;
     public A(CountDownLatch cd){
@@ -78,11 +77,28 @@ public class Solution {
 //        strList.add("SAIC");
 //        strList.add("Welcome");
 //        System.out.println(listToString(strList));
-        CountDownLatch cd = new CountDownLatch(1);
-        B b = new B(cd);
-        A a = new A(cd);
-        a.start();
-        b.start();
+//        CountDownLatch cd = new CountDownLatch(1);
+//        B b = new B(cd);
+//        A a = new A(cd);
+//        a.start();
+
+//        b.start();
+//       Map<String, String> map =  new HashMap<String, String>();
+//       map.put(null, null);
+//       Map<String, String> map2 = new ConcurrentHashMap<>();
+//       map2.put(null, null);
+//        String str = new String("good");
+//        String str1 = "good";
+//        String str2 = "good";
+//            System.out.println(str==str1);//输出为false
+//            System.out.println(str2==str1);//输出为true
+
+        List<String> strings = Arrays.asList("六脉神剑",  "大神", "小菜鸡", "交流群：549684836");
+        strings.stream().filter(string -> !string.isEmpty()).forEach(System.out::println);
+        //六脉神剑,大神 , 小菜鸡,交流群：549684836
+        Stream<Integer> distinct = strings.stream().filter(string -> string.length() <= 6).map(String::length).sorted().limit(2)
+                .distinct();
+        distinct.forEach(System.out::println);
     }
     public static String listToString(Vector strList){
         String str = new String();
