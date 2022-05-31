@@ -2,6 +2,7 @@ package com.papa.baguwen1.baguwen1;
 
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class A extends Thread{
@@ -93,12 +94,18 @@ public class Solution {
 //            System.out.println(str==str1);//输出为false
 //            System.out.println(str2==str1);//输出为true
 
-        List<String> strings = Arrays.asList("六脉神剑",  "大神", "小菜鸡", "交流群：549684836");
+        List<String> strings = Arrays.asList("六脉神剑",  "大神3", "小菜鸡", "交流群：549684836");
         strings.stream().filter(string -> !string.isEmpty()).forEach(System.out::println);
         //六脉神剑,大神 , 小菜鸡,交流群：549684836
         Stream<Integer> distinct = strings.stream().filter(string -> string.length() <= 6).map(String::length).sorted().limit(2)
                 .distinct();
-        distinct.forEach(System.out::println);
+//        System.out.println(distinct.collect(Collectors.maxBy(Integer::compareTo)).orElse(0));
+        Map<Object, List<Integer>> collectGroup = distinct.collect(Collectors.groupingBy(i -> i + 1));
+        System.out.println(collectGroup);
+
+        Stream<Integer> distinct2 = strings.stream().map(String::length).sorted();
+        System.out.println(distinct2.collect(Collectors.groupingBy(i -> i)));
+//        distinct.forEach(System.out::println);
     }
     public static String listToString(Vector strList){
         String str = new String();
